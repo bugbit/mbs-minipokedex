@@ -23,3 +23,5 @@ añadelo en CLAUDE.md
 añade en CLAUDE.md: Cada vez que se realice un cambio o se añada una nueva funcionalidad, el asistente debe aumentar la versión del proyecto
 
 añade en CLAUDE.md: Todos los cambios (añadidos, modificados, corregidos, etc.) deben ser registrados en el archivo `CHANGELOG.md` siguiendo la estructura y el formato estricto de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
+
+crea el código base completo para la pokedev.

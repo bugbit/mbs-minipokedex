@@ -46,7 +46,7 @@ After every change or new feature, increment the `<Version>` field in `claudecod
 - **Minor** (`0.x.0`) — new features, backwards-compatible additions.
 - **Major** (`x.0.0`) — breaking changes or major redesigns.
 
-Current version: `0.2.0` (added PokéAPI typed HTTP client).
+Current version: `0.3.0` (Pokédex base code: list, detail, styles).
 
 ## Documentation
 

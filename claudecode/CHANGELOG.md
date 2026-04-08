@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-04-08
+
+### Added
+
+- `PokemonController` with `Index` (paginated list + search redirect) and `Detail` actions.
+- `PokemonListViewModel` and `PokemonCardViewModel` for the list view.
+- `PokemonDetailViewModel` for the detail view (stats, types, abilities, sprites).
+- `Views/Pokemon/Index.cshtml` — Pokémon card grid with pagination.
+- `Views/Pokemon/Detail.cshtml` — full detail page: official artwork, type badges, base stat bars, abilities, height/weight/base XP, shiny toggle.
+- Pokémon type badge CSS classes (18 types with canonical colors) in `site.css`.
+- Pokémon card and detail sprite styles in `site.css`.
+- "Pokédex" link in the navbar; brand updated to "MiniPokédex".
+
+### Changed
+
+- `_Layout.cshtml` navbar brand and links updated.
+
 ## [0.2.0] - 2026-04-08
 
 ### Added

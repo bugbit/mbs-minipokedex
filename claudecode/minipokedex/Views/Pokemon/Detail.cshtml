@@ -1,0 +1,128 @@
+@model PokemonDetailViewModel
+@{
+    ViewData["Title"] = System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Model.Name);
+
+    string StatColor(int v) => v switch { < 50 => "danger", < 80 => "warning", _ => "success" };
+    int StatPercent(int v) => Math.Min(100, (int)(v / 255.0 * 100));
+}
+
+<div class="mb-3">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Back to Pokédex</a>
+</div>
+
+<div class="row g-4">
+
+    @* Left column: sprite + types + info *@
+    <div class="col-md-4 text-center">
+        <p class="text-muted mb-1">#@Model.Id.ToString("D3")</p>
+        <h1 class="h2 text-capitalize mb-3">@Model.Name</h1>
+
+        <div class="d-flex justify-content-center gap-2 mb-3">
+            @foreach (var type in Model.Types)
+            {
+                <span class="type-badge type-badge-lg type-@type">@type</span>
+            }
+        </div>
+
+        <div class="pokemon-detail-sprite-wrap mb-3" id="spriteWrap">
+            @if (Model.SpriteUrl is not null)
+            {
+                <img id="spriteImg" src="@Model.SpriteUrl" alt="@Model.Name" class="pokemon-detail-sprite" />
+            }
+            else
+            {
+                <div class="pokemon-sprite-placeholder-lg">?</div>
+            }
+        </div>
+
+        @if (Model.SpriteShinyUrl is not null)
+        {
+            <button class="btn btn-sm btn-outline-warning mb-3"
+                    onclick="toggleShiny('@Model.SpriteUrl', '@Model.SpriteShinyUrl')">
+                ✨ Toggle Shiny
+            </button>
+        }
+
+        <table class="table table-sm table-borderless mx-auto" style="max-width:220px">
+            <tbody>
+                <tr>
+                    <th class="text-muted fw-normal text-end">Height</th>
+                    <td class="text-start ps-3">@(Model.Height.HasValue ? $"{Model.Height / 10.0:F1} m" : "—")</td>
+                </tr>
+                <tr>
+                    <th class="text-muted fw-normal text-end">Weight</th>
+                    <td class="text-start ps-3">@(Model.Weight.HasValue ? $"{Model.Weight / 10.0:F1} kg" : "—")</td>
+                </tr>
+                <tr>
+                    <th class="text-muted fw-normal text-end">Base XP</th>
+                    <td class="text-start ps-3">@(Model.BaseExperience?.ToString() ?? "—")</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="text-muted text-uppercase small mt-2">Abilities</h6>
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            @foreach (var (name, isHidden) in Model.Abilities)
+            {
+                <span class="badge @(isHidden ? "bg-secondary" : "bg-primary") text-capitalize">
+                    @name @(isHidden ? "(hidden)" : "")
+                </span>
+            }
+        </div>
+    </div>
+
+    @* Right column: base stats *@
+    <div class="col-md-8">
+        <h5 class="text-muted text-uppercase small mb-3">Base Stats</h5>
+        <div class="pokemon-stats">
+            @foreach (var (name, value) in Model.Stats)
+            {
+                <div class="row align-items-center mb-2">
+                    <div class="col-3 text-end">
+                        <span class="text-muted small fw-semibold">@name</span>
+                    </div>
+                    <div class="col-1 text-end">
+                        <span class="fw-bold">@value</span>
+                    </div>
+                    <div class="col-8">
+                        <div class="progress" style="height:10px">
+                            <div class="progress-bar bg-@StatColor(value)"
+                                 role="progressbar"
+                                 style="width:@StatPercent(value)%"
+                                 aria-valuenow="@value"
+                                 aria-valuemin="0"
+                                 aria-valuemax="255">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @{
+                var total = Model.Stats.Sum(s => s.BaseStat);
+            }
+            <div class="row align-items-center mt-3 border-top pt-2">
+                <div class="col-3 text-end">
+                    <span class="small fw-semibold">Total</span>
+                </div>
+                <div class="col-1 text-end">
+                    <span class="fw-bold">@total</span>
+                </div>
+                <div class="col-8"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        let shinyActive = false;
+        function toggleShiny(normal, shiny) {
+            const img = document.getElementById('spriteImg');
+            if (!img) return;
+            shinyActive = !shinyActive;
+            img.src = shinyActive ? shiny : normal;
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+@model PokemonListViewModel
+@{
+    ViewData["Title"] = "Pokédex";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Pokédex <small class="text-muted fs-6">@Model.TotalCount Pokémon</small></h1>
+    <form asp-action="Index" method="get" class="d-flex gap-2" style="min-width:260px">
+        <input type="search" name="search" class="form-control form-control-sm"
+               placeholder="Name or number…" autocomplete="off" />
+        <button class="btn btn-sm btn-primary">Go</button>
+    </form>
+</div>
+
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+    @foreach (var p in Model.Pokemon)
+    {
+        <div class="col">
+            <a asp-action="Detail" asp-route-name="@p.Name" class="text-decoration-none">
+                <div class="card pokemon-card h-100 text-center">
+                    <div class="card-body p-2">
+                        @if (p.SpriteUrl is not null)
+                        {
+                            <img src="@p.SpriteUrl" alt="@p.Name" class="pokemon-sprite" loading="lazy" />
+                        }
+                        else
+                        {
+                            <div class="pokemon-sprite-placeholder">?</div>
+                        }
+                        <p class="pokemon-number text-muted mb-0">#@p.Id.ToString("D3")</p>
+                        <p class="pokemon-name fw-semibold text-capitalize mb-1">@p.Name</p>
+                        <div class="d-flex justify-content-center gap-1 flex-wrap">
+                            @foreach (var type in p.Types)
+                            {
+                                <span class="type-badge type-@type">@type</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-4" aria-label="Pokédex pages">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(!Model.HasPrevious ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">‹ Prev</a>
+            </li>
+
+            @for (var i = Math.Max(1, Model.Page - 2); i <= Math.Min(Model.TotalPages, Model.Page + 2); i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(!Model.HasNext ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Next ›</a>
+            </li>
+        </ul>
+    </nav>
+}
