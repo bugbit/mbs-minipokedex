@@ -34,6 +34,24 @@ Standard ASP.NET Core MVC layout under `claudecode/minipokedex/`:
 - **Views/** — Razor views, organized by controller name. Shared layout in `Views/Shared/_Layout.cshtml` uses Bootstrap 5 + jQuery.
 - **wwwroot/** — static assets. Client libs (Bootstrap, jQuery, jQuery Validation) are vendored under `wwwroot/lib/`.
 
+## Changelog
+
+Todos los cambios deben registrarse en `claudecode/CHANGELOG.md` siguiendo estrictamente el formato de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/). Categorías válidas: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`. Cada entrada va bajo la versión correspondiente con su fecha.
+
+## Versioning
+
+After every change or new feature, increment the `<Version>` field in `claudecode/minipokedex/minipokedex.csproj` following SemVer:
+
+- **Patch** (`0.0.x`) — bug fixes, minor corrections.
+- **Minor** (`0.x.0`) — new features, backwards-compatible additions.
+- **Major** (`x.0.0`) — breaking changes or major redesigns.
+
+Current version: `0.2.0` (added PokéAPI typed HTTP client).
+
+## Documentation
+
+Every new feature or significant change must be documented in a Markdown file under `claudecode/docs/`. Create the `docs/` folder if it doesn't exist yet. Each file should cover: purpose, files created/modified, key design decisions, and a usage example.
+
 ## Key Notes
 
 - Target framework: `net10.0` with nullable reference types and implicit usings enabled.

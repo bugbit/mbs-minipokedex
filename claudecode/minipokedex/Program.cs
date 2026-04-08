@@ -1,7 +1,14 @@
+using MiniPokedex.Infrastructure.PokeApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<IPokeApiClient, PokeApiClient>(client =>
+{
+    client.BaseAddress = new Uri("https://pokeapi.co/api/v2/");
+});
 
 var app = builder.Build();
 
