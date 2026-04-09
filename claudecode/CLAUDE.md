@@ -34,6 +34,43 @@ Standard ASP.NET Core MVC layout under `claudecode/minipokedex/`:
 - **Views/** — Razor views, organized by controller name. Shared layout in `Views/Shared/_Layout.cshtml` uses Bootstrap 5 + jQuery.
 - **wwwroot/** — static assets. Client libs (Bootstrap, jQuery, jQuery Validation) are vendored under `wwwroot/lib/`.
 
+## Design Principles
+
+Este proyecto sigue **Clean Architecture + DDD** y los principios **SOLID**.
+
+### Clean Architecture
+
+Las capas están organizadas de manera que las dependencias apuntan siempre hacia el interior:
+
+```
+Presentation (Controllers, Views)
+    └─► Application (Use Cases, Application Services)
+            └─► Domain (Entities, Value Objects, Interfaces)
+            Infrastructure (PokeAPI client, HTTP) ──► Domain
+```
+
+- **Domain/** — entidades, value objects, interfaces de repositorio/servicio. Sin dependencias externas.
+- **Application/** — casos de uso, application services, DTOs. Solo depende de Domain.
+- **Infrastructure/** — implementaciones concretas (PokeApiClient, HTTP). Implementa interfaces de Domain.
+- **Presentation/** — Controllers y Views MVC. Solo llama a Application.
+
+Regla clave: **Domain no conoce Infrastructure ni Presentation**.
+
+### DDD (Domain-Driven Design)
+
+- Las entidades de dominio encapsulan su lógica e invariantes.
+- Se usan Value Objects para conceptos sin identidad propia (tipo, stat, etc.).
+- Las interfaces de servicios/repositorios se declaran en Domain y se implementan en Infrastructure.
+- El lenguaje ubicuo (ubiquitous language) debe reflejarse en nombres de clases y métodos.
+
+### SOLID
+
+- **S** — cada clase tiene una única responsabilidad.
+- **O** — abierto a extensión, cerrado a modificación (usar abstracciones).
+- **L** — las implementaciones deben ser sustituibles por sus interfaces.
+- **I** — interfaces pequeñas y específicas; no forzar dependencias innecesarias.
+- **D** — depender de abstracciones, nunca de implementaciones concretas. Usar inyección de dependencias.
+
 ## Changelog
 
 Todos los cambios deben registrarse en `claudecode/CHANGELOG.md` siguiendo estrictamente el formato de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/). Categorías válidas: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`. Cada entrada va bajo la versión correspondiente con su fecha.
