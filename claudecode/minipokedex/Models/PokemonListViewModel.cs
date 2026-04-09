@@ -20,11 +20,13 @@ public record PokemonCardViewModel(
 /// <param name="TotalCount">Total number of Pokémon available across all pages.</param>
 /// <param name="Page">Current 1-based page number.</param>
 /// <param name="PageSize">Maximum number of cards per page.</param>
+/// <param name="Search">Active search term, or <c>null</c> when browsing normally.</param>
 public record PokemonListViewModel(
     List<PokemonCardViewModel> Pokemon,
     int TotalCount,
     int Page,
-    int PageSize)
+    int PageSize,
+    string? Search = null)
 {
     /// <summary>Total number of pages, calculated from <see cref="TotalCount"/> and <see cref="PageSize"/>.</summary>
     public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
@@ -34,4 +36,7 @@ public record PokemonListViewModel(
 
     /// <summary>Whether a next page exists.</summary>
     public bool HasNext => Page < TotalPages;
+
+    /// <summary>Whether the list is showing search results instead of the full paginated catalogue.</summary>
+    public bool IsSearching => !string.IsNullOrEmpty(Search);
 }

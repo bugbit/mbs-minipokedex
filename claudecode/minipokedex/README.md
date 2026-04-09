@@ -37,3 +37,7 @@ traduce las paginas al castellano
 añade en CLAUDE.md: el idioma de las paginas tiene que estar en idioma castellano
 
 añade en la pagina principal la opción de cambiar entre modo lista y modo card
+
+la busqueda tiene que filtrar por nombre o número
+
+en la busqueda usa la paginacion

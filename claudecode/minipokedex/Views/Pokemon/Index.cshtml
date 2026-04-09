@@ -4,7 +4,18 @@
 }
 
 <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-    <h1 class="h3 mb-0">Pokédex <small class="text-muted fs-6">@Model.TotalCount Pokémon</small></h1>
+    @* Título con contador contextual *@
+    <h1 class="h3 mb-0">
+        Pokédex
+        @if (Model.IsSearching)
+        {
+            <small class="text-muted fs-6">@Model.TotalCount resultado@(Model.TotalCount == 1 ? "" : "s") para «@Model.Search»</small>
+        }
+        else
+        {
+            <small class="text-muted fs-6">@Model.TotalCount Pokémon</small>
+        }
+    </h1>
 
     <div class="d-flex align-items-center gap-2">
         @* Selector de vista *@
@@ -19,14 +30,29 @@
             </button>
         </div>
 
-        @* Buscador *@
+        @* Buscador — prellenado con el término activo *@
         <form asp-action="Index" method="get" class="d-flex gap-2" style="min-width:220px">
             <input type="search" name="search" class="form-control form-control-sm"
-                   placeholder="Nombre o número…" autocomplete="off" />
+                   placeholder="Nombre o número…" autocomplete="off"
+                   value="@Model.Search" />
             <button class="btn btn-sm btn-primary">Buscar</button>
         </form>
+
+        @* Botón para limpiar la búsqueda *@
+        @if (Model.IsSearching)
+        {
+            <a asp-action="Index" class="btn btn-sm btn-outline-secondary" title="Limpiar búsqueda">✕</a>
+        }
     </div>
 </div>
+
+@* Mensaje cuando no hay resultados *@
+@if (Model.IsSearching && Model.TotalCount == 0)
+{
+    <div class="alert alert-warning">
+        No se ha encontrado ningún Pokémon que coincida con «@Model.Search».
+    </div>
+}
 
 <div id="pokemon-grid" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
     @foreach (var p in Model.Pokemon)
@@ -63,18 +89,24 @@
     <nav class="mt-4" aria-label="Páginas del Pokédex">
         <ul class="pagination justify-content-center">
             <li class="page-item @(!Model.HasPrevious ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">‹ Anterior</a>
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.Page - 1)"
+                   asp-route-search="@Model.Search">‹ Anterior</a>
             </li>
 
             @for (var i = Math.Max(1, Model.Page - 2); i <= Math.Min(Model.TotalPages, Model.Page + 2); i++)
             {
                 <li class="page-item @(i == Model.Page ? "active" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@i"
+                       asp-route-search="@Model.Search">@i</a>
                 </li>
             }
 
             <li class="page-item @(!Model.HasNext ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Siguiente ›</a>
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.Page + 1)"
+                   asp-route-search="@Model.Search">Siguiente ›</a>
             </li>
         </ul>
     </nav>
