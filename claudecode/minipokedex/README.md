@@ -29,3 +29,9 @@ crea el código base completo para la pokedev.
 añade en CLAUDE.md: todo el código tiene que estar bien limpio y bien documentado
 
 revisa que el codigo este bien limpio y documentado
+
+haz que la pagina pokedex sea la principal y borra la pagina home
+
+traduce las paginas al castellano
+
+añade en CLAUDE.md: el idioma de las paginas tiene que estar en idioma castellano

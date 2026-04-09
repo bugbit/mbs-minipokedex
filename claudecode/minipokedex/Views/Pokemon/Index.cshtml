@@ -7,8 +7,8 @@
     <h1 class="h3 mb-0">Pokédex <small class="text-muted fs-6">@Model.TotalCount Pokémon</small></h1>
     <form asp-action="Index" method="get" class="d-flex gap-2" style="min-width:260px">
         <input type="search" name="search" class="form-control form-control-sm"
-               placeholder="Name or number…" autocomplete="off" />
-        <button class="btn btn-sm btn-primary">Go</button>
+               placeholder="Nombre o número…" autocomplete="off" />
+        <button class="btn btn-sm btn-primary">Buscar</button>
     </form>
 </div>
 
@@ -44,10 +44,10 @@
 
 @if (Model.TotalPages > 1)
 {
-    <nav class="mt-4" aria-label="Pokédex pages">
+    <nav class="mt-4" aria-label="Páginas del Pokédex">
         <ul class="pagination justify-content-center">
             <li class="page-item @(!Model.HasPrevious ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">‹ Prev</a>
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)">‹ Anterior</a>
             </li>
 
             @for (var i = Math.Max(1, Model.Page - 2); i <= Math.Min(Model.TotalPages, Model.Page + 2); i++)
@@ -58,7 +58,7 @@
             }
 
             <li class="page-item @(!Model.HasNext ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Next ›</a>
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)">Siguiente ›</a>
             </li>
         </ul>
     </nav>

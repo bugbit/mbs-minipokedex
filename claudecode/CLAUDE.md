@@ -52,6 +52,10 @@ Current version: `0.3.0` (Pokédex base code: list, detail, styles).
 
 Every new feature or significant change must be documented in a Markdown file under `claudecode/docs/`. Create the `docs/` folder if it doesn't exist yet. Each file should cover: purpose, files created/modified, key design decisions, and a usage example.
 
+## Idioma
+
+Todo el texto visible en las páginas (etiquetas, botones, mensajes, textos de navegación, etc.) debe estar en **castellano**. El atributo `lang` del HTML debe ser `es`.
+
 ## Code Quality
 
 Todo el código debe estar limpio y bien documentado:

@@ -7,12 +7,12 @@
 }
 
 <div class="mb-3">
-    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Back to Pokédex</a>
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Volver al Pokédex</a>
 </div>
 
 <div class="row g-4">
 
-    @* Left column: sprite + types + info *@
+    @* Columna izquierda: sprite, tipos e información general *@
     <div class="col-md-4 text-center">
         <p class="text-muted mb-1">#@Model.Id.ToString("D3")</p>
         <h1 class="h2 text-capitalize mb-3">@Model.Name</h1>
@@ -39,41 +39,41 @@
         {
             <button class="btn btn-sm btn-outline-warning mb-3"
                     onclick="toggleShiny('@Model.SpriteUrl', '@Model.SpriteShinyUrl')">
-                ✨ Toggle Shiny
+                ✨ Ver versión shiny
             </button>
         }
 
         <table class="table table-sm table-borderless mx-auto" style="max-width:220px">
             <tbody>
                 <tr>
-                    <th class="text-muted fw-normal text-end">Height</th>
+                    <th class="text-muted fw-normal text-end">Altura</th>
                     <td class="text-start ps-3">@(Model.Height.HasValue ? $"{Model.Height / 10.0:F1} m" : "—")</td>
                 </tr>
                 <tr>
-                    <th class="text-muted fw-normal text-end">Weight</th>
+                    <th class="text-muted fw-normal text-end">Peso</th>
                     <td class="text-start ps-3">@(Model.Weight.HasValue ? $"{Model.Weight / 10.0:F1} kg" : "—")</td>
                 </tr>
                 <tr>
-                    <th class="text-muted fw-normal text-end">Base XP</th>
+                    <th class="text-muted fw-normal text-end">XP base</th>
                     <td class="text-start ps-3">@(Model.BaseExperience?.ToString() ?? "—")</td>
                 </tr>
             </tbody>
         </table>
 
-        <h6 class="text-muted text-uppercase small mt-2">Abilities</h6>
+        <h6 class="text-muted text-uppercase small mt-2">Habilidades</h6>
         <div class="d-flex flex-wrap justify-content-center gap-2">
             @foreach (var (name, isHidden) in Model.Abilities)
             {
                 <span class="badge @(isHidden ? "bg-secondary" : "bg-primary") text-capitalize">
-                    @name @(isHidden ? "(hidden)" : "")
+                    @name @(isHidden ? "(oculta)" : "")
                 </span>
             }
         </div>
     </div>
 
-    @* Right column: base stats *@
+    @* Columna derecha: estadísticas base *@
     <div class="col-md-8">
-        <h5 class="text-muted text-uppercase small mb-3">Base Stats</h5>
+        <h5 class="text-muted text-uppercase small mb-3">Estadísticas base</h5>
         <div class="pokemon-stats">
             @foreach (var (name, value) in Model.Stats)
             {
