@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-09
+
+### Added
+
+- `Domain/Models/PokemonSummary.cs` — read model ligero para listas y búsquedas.
+- `Domain/Models/PokemonDetail.cs` — read model completo para la página de detalle.
+- `Domain/Ports/IPokemonRepository.cs` — puerto (interfaz) de repositorio declarado en Domain; expone `ListPageAsync`, `SearchPageAsync` y `GetDetailAsync`.
+- `Application/Services/PokemonAppService.cs` — servicio de aplicación que orquesta los casos de uso (paginación, búsqueda, detalle) delegando en `IPokemonRepository`.
+- `Infrastructure/PokeApi/PokeApiPokemonRepository.cs` — implementación concreta de `IPokemonRepository` que usa `IPokeApiClient`; contiene todo el mapeo de modelos API → modelos de dominio.
+- `docs/clean-architecture-refactor.md` — documentación del rediseño arquitectónico.
+
+### Changed
+
+- `PokemonController` refactorizado a controlador delgado: elimina lógica de búsqueda, paginación y mapeo; solo llama a `PokemonAppService` y proyecta resultados a ViewModels.
+- `Program.cs` actualizado: registra `IPokemonRepository → PokeApiPokemonRepository` y `PokemonAppService` en el contenedor de DI.
+- `CLAUDE.md` actualizado con sección `## Design Principles` describiendo Clean Architecture, DDD y SOLID.
+
 ## [0.3.0] - 2026-04-08
 
 ### Added

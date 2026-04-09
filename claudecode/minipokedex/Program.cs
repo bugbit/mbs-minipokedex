@@ -1,3 +1,5 @@
+using MiniPokedex.Application.Services;
+using MiniPokedex.Domain.Ports;
 using MiniPokedex.Infrastructure.PokeApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,10 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Infrastructure: typed HTTP client for the PokéAPI (internal to the Infrastructure layer).
 builder.Services.AddHttpClient<IPokeApiClient, PokeApiClient>(client =>
 {
     client.BaseAddress = new Uri("https://pokeapi.co/api/v2/");
 });
+
+// Infrastructure → Domain: concrete repository wired to the domain port.
+builder.Services.AddScoped<IPokemonRepository, PokeApiPokemonRepository>();
+
+// Application: orchestration service used by controllers.
+builder.Services.AddScoped<PokemonAppService>();
 
 var app = builder.Build();
 
@@ -16,7 +25,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -31,6 +39,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Pokemon}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

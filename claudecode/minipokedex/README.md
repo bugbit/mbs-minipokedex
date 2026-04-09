@@ -41,3 +41,7 @@ añade en la pagina principal la opción de cambiar entre modo lista y modo card
 la busqueda tiene que filtrar por nombre o número
 
 en la busqueda usa la paginacion
+
+añade en Claude.md y comprueba: Este proyecto sigue **Clean Architecture + DDD** y los principios **SOLID**
+
+comprueba que el proyecto sigue **Clean Architecture + DDD** y los principios **SOLID**
