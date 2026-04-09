@@ -3,16 +3,32 @@
     ViewData["Title"] = "Pokédex";
 }
 
-<div class="d-flex align-items-center justify-content-between mb-3">
+<div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
     <h1 class="h3 mb-0">Pokédex <small class="text-muted fs-6">@Model.TotalCount Pokémon</small></h1>
-    <form asp-action="Index" method="get" class="d-flex gap-2" style="min-width:260px">
-        <input type="search" name="search" class="form-control form-control-sm"
-               placeholder="Nombre o número…" autocomplete="off" />
-        <button class="btn btn-sm btn-primary">Buscar</button>
-    </form>
+
+    <div class="d-flex align-items-center gap-2">
+        @* Selector de vista *@
+        <div class="btn-group view-toggle" role="group" aria-label="Cambiar vista">
+            <button id="btnCard" type="button" class="btn btn-sm btn-outline-secondary active"
+                    title="Vista tarjetas" onclick="setView('card')">
+                ▦
+            </button>
+            <button id="btnList" type="button" class="btn btn-sm btn-outline-secondary"
+                    title="Vista lista" onclick="setView('list')">
+                ☰
+            </button>
+        </div>
+
+        @* Buscador *@
+        <form asp-action="Index" method="get" class="d-flex gap-2" style="min-width:220px">
+            <input type="search" name="search" class="form-control form-control-sm"
+                   placeholder="Nombre o número…" autocomplete="off" />
+            <button class="btn btn-sm btn-primary">Buscar</button>
+        </form>
+    </div>
 </div>
 
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+<div id="pokemon-grid" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
     @foreach (var p in Model.Pokemon)
     {
         <div class="col">
@@ -62,4 +78,28 @@
             </li>
         </ul>
     </nav>
+}
+
+@section Scripts {
+    <script>
+        const STORAGE_KEY = 'pokedex-view';
+        const grid = document.getElementById('pokemon-grid');
+
+        /** Aplica el modo de vista y actualiza los botones. */
+        function setView(mode) {
+            const isList = mode === 'list';
+
+            grid.classList.toggle('view-list', isList);
+            document.getElementById('btnCard').classList.toggle('active', !isList);
+            document.getElementById('btnList').classList.toggle('active', isList);
+
+            localStorage.setItem(STORAGE_KEY, mode);
+        }
+
+        // Restaurar la preferencia guardada al cargar la página.
+        (function () {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === 'list') setView('list');
+        })();
+    </script>
 }

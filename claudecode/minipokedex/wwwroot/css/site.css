@@ -71,6 +71,61 @@ body {
   white-space: nowrap;
 }
 
+/* ── Vista lista ───────────────────────────────────────────────────────────── */
+
+/* En modo lista el grid pasa a una sola columna */
+#pokemon-grid.view-list {
+  display: flex !important;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+#pokemon-grid.view-list .col {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none;
+}
+
+/* Tarjeta horizontal en modo lista */
+#pokemon-grid.view-list .pokemon-card .card-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  padding: .5rem .75rem;
+}
+
+#pokemon-grid.view-list .pokemon-sprite {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+#pokemon-grid.view-list .pokemon-sprite-placeholder {
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+#pokemon-grid.view-list .pokemon-number {
+  min-width: 2.8rem;
+  flex-shrink: 0;
+}
+
+#pokemon-grid.view-list .pokemon-name {
+  flex: 1;
+  font-size: .95rem;
+}
+
+/* Botones de cambio de vista */
+.view-toggle .btn.active {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+
 /* ── Detail view ───────────────────────────────────────────────────────────── */
 
 .pokemon-detail-sprite-wrap {

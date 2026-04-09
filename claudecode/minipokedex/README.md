@@ -35,3 +35,5 @@ haz que la pagina pokedex sea la principal y borra la pagina home
 traduce las paginas al castellano
 
 añade en CLAUDE.md: el idioma de las paginas tiene que estar en idioma castellano
+
+añade en la pagina principal la opción de cambiar entre modo lista y modo card
