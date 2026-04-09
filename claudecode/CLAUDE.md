@@ -52,6 +52,15 @@ Current version: `0.3.0` (Pokédex base code: list, detail, styles).
 
 Every new feature or significant change must be documented in a Markdown file under `claudecode/docs/`. Create the `docs/` folder if it doesn't exist yet. Each file should cover: purpose, files created/modified, key design decisions, and a usage example.
 
+## Code Quality
+
+Todo el código debe estar limpio y bien documentado:
+
+- Clases, métodos y propiedades públicos deben incluir comentarios XML (`/// <summary>`).
+- Evitar código muerto, variables sin usar y lógica innecesariamente compleja.
+- Cada método debe tener una única responsabilidad clara.
+- Los nombres de variables, métodos y clases deben ser descriptivos y coherentes con el resto del proyecto.
+
 ## Key Notes
 
 - Target framework: `net10.0` with nullable reference types and implicit usings enabled.

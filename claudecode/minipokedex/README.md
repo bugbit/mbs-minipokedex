@@ -25,3 +25,7 @@ añade en CLAUDE.md: Cada vez que se realice un cambio o se añada una nueva fun
 añade en CLAUDE.md: Todos los cambios (añadidos, modificados, corregidos, etc.) deben ser registrados en el archivo `CHANGELOG.md` siguiendo la estructura y el formato estricto de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
 crea el código base completo para la pokedev.
+
+añade en CLAUDE.md: todo el código tiene que estar bien limpio y bien documentado
+
+revisa que el codigo este bien limpio y documentado

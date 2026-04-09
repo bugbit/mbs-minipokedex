@@ -5,10 +5,21 @@ using MiniPokedex.Infrastructure.PokeApi;
 
 namespace minipokedex.Controllers;
 
+/// <summary>
+/// Handles the Pokédex pages: paginated list and individual Pokémon detail.
+/// </summary>
 public class PokemonController(IPokeApiClient pokeApi) : Controller
 {
+    /// <summary>Number of Pokémon cards shown per page in the list view.</summary>
     private const int PageSize = 20;
 
+    /// <summary>
+    /// Renders the paginated Pokémon list. If a search term is provided the user
+    /// is redirected directly to the matching Pokémon's detail page.
+    /// </summary>
+    /// <param name="page">1-based page number (defaults to 1).</param>
+    /// <param name="search">Optional Pokémon name to search for.</param>
+    /// <param name="ct">Cancellation token.</param>
     public async Task<IActionResult> Index(int page = 1, string? search = null, CancellationToken ct = default)
     {
         if (!string.IsNullOrWhiteSpace(search))
@@ -33,6 +44,12 @@ public class PokemonController(IPokeApiClient pokeApi) : Controller
         return View(new PokemonListViewModel(cards, list.Count, page, PageSize));
     }
 
+    /// <summary>
+    /// Renders the detail page for a single Pokémon identified by name or ID.
+    /// Returns 404 if the Pokémon does not exist in the PokéAPI.
+    /// </summary>
+    /// <param name="name">Pokémon name or numeric ID (case-insensitive).</param>
+    /// <param name="ct">Cancellation token.</param>
     public async Task<IActionResult> Detail(string name, CancellationToken ct = default)
     {
         var pokemon = await pokeApi.GetPokemonAsync(name.ToLowerInvariant(), ct);
@@ -54,6 +71,13 @@ public class PokemonController(IPokeApiClient pokeApi) : Controller
         return View(vm);
     }
 
+    /// <summary>
+    /// Resolves the sprite URL for a Pokémon, preferring the official artwork.
+    /// Falls back to the standard front sprite when artwork is unavailable.
+    /// </summary>
+    /// <param name="sprites">Raw JSON element from the PokéAPI sprites object.</param>
+    /// <param name="shiny">When <c>true</c>, returns the shiny variant URL.</param>
+    /// <returns>The sprite URL, or <c>null</c> if none is available.</returns>
     private static string? GetSpriteUrl(JsonElement sprites, bool shiny = false)
     {
         var key = shiny ? "front_shiny" : "front_default";
@@ -71,6 +95,11 @@ public class PokemonController(IPokeApiClient pokeApi) : Controller
         return null;
     }
 
+    /// <summary>
+    /// Maps PokéAPI internal stat names to human-readable display labels.
+    /// </summary>
+    /// <param name="name">Raw stat name as returned by the PokéAPI.</param>
+    /// <returns>A short, display-friendly label.</returns>
     private static string StatLabel(string name) => name switch
     {
         "hp"              => "HP",
